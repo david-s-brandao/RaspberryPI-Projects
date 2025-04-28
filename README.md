@@ -3,58 +3,62 @@
 </p>
 
 <h1 align="center">Raspberry Pi Projects</h1>
-<p align="center"><strong>Raspberry Pi projects and documentation.</strong></p>
+<p align="center"><strong>A collection of Raspberry Pi projects and technical documentation</strong></p>
+
 <p align="center">
-  This repository documents my experiments, utilities, and solutions developed with this versatile microcomputer.
-  Everything here is done purely for learning, curiosity, and practical application.
+  This repository contains documented experiments, utilities, and solutions developed using the Raspberry Pi platform.
+  All projects are created for educational purposes and practical applications.
 </p>
 
 ---
 
-### 📚 Table of Contents
+## Table of Contents
 
-- [📂 Projects Index](#-projects-index)
-- [⚙️ Common Setup & Tools](#️-common-setup--tools)
-- [📌 Notes](#-notes)
+- [Projects Index](#projects-index)
+- [Common Setup & Tools](#common-setup--tools)
+- [Notes](#notes)
 
 ---
 
-## 📂 Projects Index
+## Projects Index
 
-- 🔹 [NAS – Network Attached Storage](./raspberry-pi-nas/README.md)  
-  A home file server using Raspberry Pi and an external hard drive. Perfect for file sharing and local backups.
+- [NAS – Network Attached Storage](./raspberry-pi-nas/README.md)  
+  A home file server implementation using Raspberry Pi with external storage, designed for local file sharing and backups.
 
-<!-- Add more projects below as needed
-- 🔹 [Pi-hole - Ad Blocker](./pihole/README.md)
-- 🔹 [Weather Station](./weather-station/README.md)
+<!-- Additional projects can be listed here
+- [Pi-hole - Network-wide Ad Blocker](./pihole/README.md)
+- [IoT Weather Station](./weather-station/README.md)
 -->
 
 ---
 
-## ⚙️ Common Setup & Tools
+## Common Setup & Tools
 
-- 📦 **Base OS**: Raspberry Pi OS Lite (Debian-based)  
-  A terminal-only operating system, ideal for low-RAM devices like the Raspberry Pi.
+- **Base OS**: Raspberry Pi OS Lite (Debian-based)  
+  Minimal terminal-only operating system optimized for Raspberry Pi hardware.
 
-- 🔐 **Security**:  
-  SSH with public key authentication, firewall using UFW, optional intrusion prevention with `fail2ban`.
+- **Security Configuration**:  
+  - SSH with public key authentication
+  - UFW firewall implementation
+  - Optional fail2ban intrusion prevention
 
-- 📡 **Remote Access**:  
-  Remote VPN access via WireGuard.
+- **Remote Access**:  
+  Secure VPN connectivity via WireGuard.
 
-- 🔄 **Automation**:  
-  Task scheduling with `cron`, background services via `systemd`, and custom shell scripts.
-
----
-
-## 📌 Notes
-
-- Each project has its own `README.md` with setup instructions, configurations, and tips.
-- Whenever possible, I follow the **KISS** principle – *Keep It Simple, Stupid*.
-- This list is growing over time and ordered chronologically by creation date.
-- Feel free to explore, fork, or suggest improvements.
+- **Automation**:  
+  - Scheduled tasks using cron
+  - Systemd service management
+  - Custom automation scripts
 
 ---
 
-<p align="center"><em>Built with ⚡, curiosity and 🍓 Raspberry Pi.</em></p>
+## Notes
 
+- Each project includes detailed documentation in its respective README.md file
+- Solutions follow the KISS principle (Keep It Simple)
+- Projects are organized chronologically by implementation date
+- Contributions and suggestions are welcome
+
+---
+
+<p align="center">Developed using Raspberry Pi technology</p>
