@@ -125,7 +125,14 @@ pihole:
 You can set or reset the PiHole admin password using:
 
 ```bash
-docker exec -it pihole pihole -a setpassword "newsecurepassword"
+docker exec -it pihole pihole -a setpassword "newsecurepassword" # This is ony available for the current session, if the rapsberry pi or docker is rebooted, the password will be deleted
+```
+
+To make the password `non volatile`, you must create a .env file, this file is encrypted and will keep you password no matter what happens:
+
+```bash
+# Create a new .env file with this content
+PIHOLE_WEBPASSWORD=newsecurepassword
 ```
 
 ---
