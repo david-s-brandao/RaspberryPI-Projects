@@ -45,13 +45,13 @@
 
 ### Core Components
 
-| Component          | Specification         | Purpose                              |
-|--------------------|-----------------------|--------------------------------------|
-| Raspberry Pi       | 4B (2GB+ RAM)         | System processor                     |
-| Storage            | 32GB+ microSD         | Base system                          |
-| External Drive     | SSD/HDD               | Optional, for additional storage     |
-| Operating System   | Raspberry Pi OS Lite  | Lightweight operating system         |
-| Network Connection | Ethernet cable        | Stable network connectivity          |
+| Component          | Specification        | Purpose                              |
+|--------------------|----------------------|--------------------------------------|
+| Raspberry Pi       | (2GB+ RAM)           | System processor                     |
+| Storage            | 32GB+ microSD        | Base system                          |
+| External Drive     | SSD/HDD              | Optional, for additional storage     |
+| Operating System   | Raspberry Pi OS Lite | Lightweight operating system         |
+| Network Connection | Ethernet cable       | Stable network connectivity          |
 
 ---
 
@@ -59,16 +59,20 @@
 
 ### Step 1: Install the Operating System
 
-1. Download [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
+1. Download [Raspberry Pi Imager](https://www.Raspberrypi.com/software/).
 2. Select **"Raspberry Pi OS Lite (64-bit)"**.
-3. Enable SSH during installation for remote management.
+3. Enable SSH during installation for remote management. 
 
 ### Step 2: Configure the System
 
 Update and upgrade the system packages:
 
 ```bash
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y && reboot now 
+```
+If the Raspberry Pi gets stuck in an error screen or black and doesn't ping, try to reinstall the operating system but only update the packages:
+```bash
+sudo apt update # No reason to reboot the Raspberry Pi since there were no kernel base changes 
 ```
 
 ### Step 3: Install Docker
@@ -86,8 +90,8 @@ sudo usermod -aG docker $USER
 ```
 
 ### Step 4: Install Docker Compose
-
-Install Docker Compose to manage multi-container setups:
+#### To better organize the Raspberry Pi and isolate it from external interfaces, using Docker is highly recommended, especially if you plan to build multiple projects on a single Raspberry Pi.
+Install [Docker Compose](https://docs.docker.com/compose/) to manage multi-container setups:
 
 ```bash
 sudo apt install docker-compose
@@ -97,7 +101,7 @@ sudo apt install docker-compose
 
 ## PiHole Configuration
 
-### Step 1: Define the PiHole Service
+### Step 1: Define the [PiHole](https://pi-hole.net/) Service
 
 Add the following configuration to the `docker-compose.yml` file:
 
@@ -107,7 +111,7 @@ pihole:
   image: pihole/pihole:latest
   environment:
     TZ: 'Europe/Lisbon'
-    WEBPASSWORD: '${PIHOLE_WEBPASSWORD}'
+    WEBPASSWORD: '${PiHOLE_WEBPASSWORD}'
   volumes:
     - './pihole/etc-pihole:/etc/pihole'
     - './pihole/etc-dnsmasq.d:/etc/dnsmasq.d'
@@ -132,7 +136,7 @@ To make the password `non volatile`, you must create a .env file, this file is e
 
 ```bash
 # Create a new .env file with this content
-PIHOLE_WEBPASSWORD=newsecurepassword
+PiHOLE_WEBPASSWORD=newsecurepassword
 ```
 
 ---
@@ -155,7 +159,7 @@ packet_capture:
 
 ### Step 2: Create the Dockerfile for the Packet Sniffer
 
-Save the following Dockerfile in the `packet-sniffer/` directory:
+Using [TCPDump](https://www.tcpdump.org/), save the following Dockerfile in the `packet-sniffer/` directory:
 
 ```dockerfile
 FROM ubuntu:latest
@@ -181,13 +185,6 @@ sudo ufw enable
 
 Disable external exposure by avoiding wide port mappings, such as `0.0.0.0:80`.
 
-### Avoid Host Network Mode
-
-Where possible, use a dedicated Docker bridge network for increased isolation:
-
-```bash
-docker network create --driver bridge secure_net
-```
 
 Connect containers to the bridge network as required.
 
@@ -210,6 +207,17 @@ watchtower:
     - /var/run/docker.sock:/var/run/docker.sock
   restart: unless-stopped
 ```
+### Disclaimer
+
+Running Docker containers as the root user is generally discouraged due to security risks. If the container or system is compromised, it could allow attackers to gain root access to the Raspberry Pi or the host system.
+
+In this project, running the containers as root is acceptable due to the small scope of the project and the specific permissions required. However, for larger or more complex containers, it is strongly recommended to configure and run the containers with a non-root user to reduce potential attack vectors.
+
+To implement a non-root Docker setup, you can:
+1. Create a dedicated user within the container.
+2. Use the `USER` directive in the Dockerfile to specify this non-root user.
+3. Adjust file and directory permissions accordingly. `(SYS_TIME, SYS_CAL...)`
+     ### Prioritizing security practices, even in small projects, is always a good habit.
 
 ---
 
